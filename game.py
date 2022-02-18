@@ -158,22 +158,32 @@ class Game:
         self._own_board[self._player1].confirm()
         self._own_board[self._player2].confirm()
 
+    def review(self):
+        self._player1.review()
+        self._player2.review()
+
     def play(self):
+        self.setup()
         for i in range(0, 2*BOARD_SHAPE[0]*BOARD_SHAPE[1]):
             self._player1.play()
             if self._winner:
+                self.review()
                 return self._player1
             self._player2.play()
             if self._winner:
+                self.review()
                 return self._player2
 
-    def view_own_board(self, player):
+    def view_own_private_board(self, player):
         return self._own_board[player].hidden_arr.copy()
+
+    def view_own_public_board(self, player):
+        return self._own_board[player].visible_arr.copy()
 
     def view_enemy_board(self, player):
         return self._enemy_board[player].visible_arr.copy()
 
-    def view_ships(self, player):
+    def view_own_ships(self, player):
         return deepcopy(self._own_board[player].fleet)
 
     def place_ship(self, player, ship):

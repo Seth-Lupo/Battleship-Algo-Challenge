@@ -3,7 +3,7 @@ from game import *
 from gui import *
 from test import *
 
-class TemplatePlayer(Player):
+class ExamplePlayer(Player):
 
     # What is run when your bot is initialized. 
     # It will be initialized each match. However, it will retain its memory from previous game.
@@ -16,8 +16,6 @@ class TemplatePlayer(Player):
         # setup() will be called every game. It is where you will place all of your ships.
         # By default, it will scatter the ships randomly.
         # If you fail to place all of your ships you will lose.
-
-        
         
 
     def setup(self):
@@ -50,13 +48,12 @@ class TemplatePlayer(Player):
         #in your bot you will likely need to know how many ships you have, 
         # use the view_ships method to view your existing ships.
 
-        self.current_game.view_ships(self)
+        self.current_game.view_own_ships(self)
 
-        # to view your own board, use view_own_board
+        # to view your own board, use view_own_private_board()
 
-        self.current_game.view_own_board(self)
-
-
+        self.current_game.view_own_private_board(self) 
+        
         # the numpy array describes the ships in terms of these constants
 
         EMPTY # no ship at the position
@@ -93,20 +90,28 @@ class TemplatePlayer(Player):
         # However, to know its effects, you will need to use view_enemy_board next turn
 
 
+        # this final message will be called after every game
+
+
+    #this final method runs every time a game finishes
+    def review(self):
+
+        # you can view your enemies attacks with view_own_public_board().
+        # this discribes their hits, misses, and what they sunk
+        self.current_game.view_own_public_board(self)
+
 if __name__ == "__main__":
     
     # We can easily play vs our two AIS to get a winner
 
     p1 = Player() #default (completely random player)
-    p2 = TemplatePlayer() # our template
+    p2 = ExamplePlayer() # our template
     g = Game(p1, p2)  # our game
-    g.setup() # allow them to set up
     w = g.play() #make them play, finding a winner
     print(type(w).__name__) # printing the winner
 
     # # and they can play another time too
     g = Game(p1, p2)
-    g.setup() 
     w = g.play()
     print(type(w).__name__)
 
@@ -121,7 +126,6 @@ if __name__ == "__main__":
     #however, you must also pass into the constructor the amount of milliseconds each turn should take
 
     g = VisibleGame(p1, p2, 100)
-    g.setup() 
     w = g.play()
 
 

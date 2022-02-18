@@ -11,10 +11,7 @@ def calc_accuracy(p1, p2, times):
     s2 = 0
     
     for i in range(0, times):
-        
         g = Game(p1, p2)
-        g.setup()
-        
         if g.play() == p1:
             s1 += 1
         else:

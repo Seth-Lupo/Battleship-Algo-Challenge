@@ -26,12 +26,14 @@ class VisibleGame(Game):
         
 
     def play(self):
+        self.setup()
         for i in range(0, 2*BOARD_SHAPE[0]*BOARD_SHAPE[1]):
             p.event.get()
             self._player1.play()
             self.draw()
             p.time.wait(self.rate)
             if self._winner:
+                self.review()
                 p.time.wait(5000)
                 return self._player1
             p.event.get()
@@ -39,6 +41,7 @@ class VisibleGame(Game):
             self.draw()
             p.time.wait(self.rate)
             if self._winner:
+                self.review()
                 p.time.wait(5000)
                 return self._player2
 

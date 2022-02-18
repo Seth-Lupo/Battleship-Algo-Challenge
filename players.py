@@ -40,6 +40,9 @@ class Player:
 
         self.current_game.shoot_enemy(self, coordinate)
 
+    def review(self):
+        pass
+
   
 
 
